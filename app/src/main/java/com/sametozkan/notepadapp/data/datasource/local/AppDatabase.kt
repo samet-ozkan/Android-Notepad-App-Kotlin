@@ -16,9 +16,9 @@ import com.sametozkan.notepadapp.data.datasource.local.entities.NoteLabelXRef
     version = 1, exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase(){
-    abstract fun NoteDao() : NoteDao
-    abstract fun LabelDao() : LabelDao
-    abstract fun NoteLabelXRefDao() : NoteLabelXRefDao
+    abstract fun noteDao() : NoteDao
+    abstract fun labelDao() : LabelDao
+    abstract fun noteLabelXRefDao() : NoteLabelXRefDao
 
     companion object {
         @Volatile private var instance: AppDatabase? = null

@@ -11,10 +11,7 @@ import com.sametozkan.notepadapp.data.datasource.local.entities.NoteLabelXRef
 interface NoteLabelXRefDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(noteLabel : NoteLabelXRef) : Long
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(vararg noteLabel : NoteLabelXRef)
+    suspend fun insert(vararg noteLabel : NoteLabelXRef) : List<Long>
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(vararg noteLabel : NoteLabelXRef)

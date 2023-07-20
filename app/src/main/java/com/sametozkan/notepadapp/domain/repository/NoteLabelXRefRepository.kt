@@ -7,9 +7,7 @@ import com.sametozkan.notepadapp.data.datasource.local.entities.NoteLabelXRef
 
 interface NoteLabelXRefRepository {
 
-    suspend fun insert(noteLabel : NoteLabelXRef) : Long
-
-    suspend fun insert(vararg noteLabel : NoteLabelXRef)
+    suspend fun insert(vararg noteLabel : NoteLabelXRef) : List<Long>
 
     suspend fun update(vararg noteLabel : NoteLabelXRef)
 

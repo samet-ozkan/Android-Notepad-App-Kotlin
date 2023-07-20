@@ -16,10 +16,7 @@ interface LabelDao {
     fun getAll() : LiveData<List<LabelEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(label : LabelEntity) : Long
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(vararg label : LabelEntity)
+    suspend fun insert(vararg label : LabelEntity) : List<Long>
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(vararg label : LabelEntity)

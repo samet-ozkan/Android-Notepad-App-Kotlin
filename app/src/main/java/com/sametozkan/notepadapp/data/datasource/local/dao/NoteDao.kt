@@ -19,13 +19,10 @@ interface NoteDao {
 
     @Transaction
     @Query("SELECT * FROM Note ORDER BY note_timestamp DESC")
-    fun getAllWithLabels() : List<NoteWithLabels>
+    fun getAllWithLabels() : LiveData<List<NoteWithLabels>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(note : NoteEntity) : Long
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg note : NoteEntity)
+    fun insert(vararg note : NoteEntity) : List<Long>
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(vararg note : NoteEntity)

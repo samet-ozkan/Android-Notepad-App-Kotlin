@@ -8,11 +8,9 @@ interface NoteRepository {
 
     fun getAll() : LiveData<List<NoteEntity>>
 
-    fun getAllWithLabels() : List<NoteWithLabels>
+    fun getAllWithLabels() : LiveData<List<NoteWithLabels>>
 
-    suspend fun insert(note : NoteEntity) : Long
-
-    suspend fun insert(vararg note : NoteEntity)
+    suspend fun insert(vararg note : NoteEntity) : List<Long>
 
     suspend fun update(vararg note : NoteEntity)
 
