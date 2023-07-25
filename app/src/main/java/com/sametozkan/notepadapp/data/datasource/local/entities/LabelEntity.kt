@@ -9,6 +9,6 @@ import androidx.room.PrimaryKey
 data class LabelEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "label_id")
-    val uid: Long,
+    val uid: Long = 0,
     @ColumnInfo(name = "label_name") val name: String
 )

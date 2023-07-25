@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 data class NoteEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "note_id")
-    val uid: Long,
+    val uid: Long = 0,
     @ColumnInfo(name = "note_title") val title: String,
     @ColumnInfo(name = "note_content") val text: String,
     @ColumnInfo(name = "note_timestamp") val timestamp: Long,
