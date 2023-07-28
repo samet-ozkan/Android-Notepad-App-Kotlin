@@ -1,27 +1,35 @@
-package com.sametozkan.notepadapp.presentation
+package com.sametozkan.notepadapp.presentation.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sametozkan.notepadapp.data.datasource.local.entities.NoteWithLabels
 import com.sametozkan.notepadapp.databinding.ItemNoteBinding
+import com.sametozkan.notepadapp.presentation.note.NoteActivity
+import com.sametozkan.notepadapp.util.Constants
+import java.io.Serializable
 
-class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
+class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder> {
 
-    var noteList: List<NoteWithLabels> = ArrayList()
+    var noteList: List<NoteWithLabels>
         @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteListAdapter.ViewHolder {
+    constructor(noteList: List<NoteWithLabels>) {
+        this.noteList = noteList
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemNoteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: NoteListAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val position = holder.adapterPosition
         val note = noteList.get(position)
         holder.bindItem(note)
@@ -37,9 +45,14 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
             val noteEntity = noteWithLabels.note
             binding.apply {
                 title.text = noteEntity.title
-                //content.text = noteEntity.text
                 date.text = noteEntity.timestamp.toString()
+                root.setOnClickListener {
+                    val intent = Intent(it.context, NoteActivity::class.java)
+                    intent.putExtra(Constants.NOTE_ENTITY, noteWithLabels)
+                    it.context.startActivity(intent)
+                }
             }
+
         }
     }
 }

@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "Label", indices = [Index(value = arrayOf("label_id"))])
 data class LabelEntity(
@@ -11,4 +12,4 @@ data class LabelEntity(
     @ColumnInfo(name = "label_id")
     val uid: Long = 0,
     @ColumnInfo(name = "label_name") val name: String
-)
+) : Serializable

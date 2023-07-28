@@ -17,6 +17,10 @@ class NoteRepositoryImpl @Inject constructor(private val noteDao: NoteDao) : Not
         return noteDao.getAllWithLabels()
     }
 
+    override fun getNotesWithLabelsByKeyword(keyword: String): LiveData<List<NoteWithLabels>> {
+        return noteDao.getNotesWithLabelsByKeyword(keyword)
+    }
+
     override suspend fun insert(vararg note: NoteEntity) : List<Long> {
         return noteDao.insert(*note)
     }

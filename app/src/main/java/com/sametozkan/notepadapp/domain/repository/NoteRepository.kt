@@ -10,6 +10,8 @@ interface NoteRepository {
 
     fun getAllWithLabels() : LiveData<List<NoteWithLabels>>
 
+    fun getNotesWithLabelsByKeyword(keyword : String) : LiveData<List<NoteWithLabels>>
+
     suspend fun insert(vararg note : NoteEntity) : List<Long>
 
     suspend fun update(vararg note : NoteEntity)

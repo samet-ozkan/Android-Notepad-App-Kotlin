@@ -7,6 +7,7 @@ import com.sametozkan.notepadapp.data.repository.LabelRepositoryImpl
 import com.sametozkan.notepadapp.data.repository.NoteLabelXRefRepositoryImpl
 import com.sametozkan.notepadapp.data.repository.NoteRepositoryImpl
 import com.sametozkan.notepadapp.domain.repository.LabelRepository
+import com.sametozkan.notepadapp.domain.repository.NoteLabelXRefRepository
 import com.sametozkan.notepadapp.domain.repository.NoteRepository
 import dagger.Module
 import dagger.Provides
@@ -33,7 +34,7 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideNoteLabelXRefRepository(noteLabelXRefDao: NoteLabelXRefDao)
-            : NoteLabelXRefRepositoryImpl {
+            : NoteLabelXRefRepository {
         return NoteLabelXRefRepositoryImpl(noteLabelXRefDao)
     }
 }

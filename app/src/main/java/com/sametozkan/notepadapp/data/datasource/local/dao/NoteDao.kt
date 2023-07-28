@@ -21,6 +21,10 @@ interface NoteDao {
     @Query("SELECT * FROM Note ORDER BY note_timestamp DESC")
     fun getAllWithLabels() : LiveData<List<NoteWithLabels>>
 
+    @Transaction
+    @Query("SELECT * FROM Note WHERE note_title LIKE '%' || :keyword || '%' OR note_content LIKE '%' || :keyword || '%' ")
+    fun getNotesWithLabelsByKeyword(keyword : String) : LiveData<List<NoteWithLabels>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg note : NoteEntity) : List<Long>
 

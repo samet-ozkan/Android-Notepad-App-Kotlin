@@ -1,7 +1,6 @@
-package com.sametozkan.notepadapp.domain.usecase
+package com.sametozkan.notepadapp.domain.use_case
 
 import com.sametozkan.notepadapp.data.datasource.local.entities.NoteLabelXRef
-import com.sametozkan.notepadapp.data.repository.NoteLabelXRefRepositoryImpl
 import com.sametozkan.notepadapp.domain.repository.NoteLabelXRefRepository
 import javax.inject.Inject
 

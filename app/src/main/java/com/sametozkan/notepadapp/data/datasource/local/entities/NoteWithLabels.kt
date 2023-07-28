@@ -3,6 +3,7 @@ package com.sametozkan.notepadapp.data.datasource.local.entities
 import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
+import java.io.Serializable
 
 data class NoteWithLabels(
 
@@ -21,4 +22,4 @@ data class NoteWithLabels(
     )
 
     val labels: List<LabelEntity>
-)
+) : Serializable

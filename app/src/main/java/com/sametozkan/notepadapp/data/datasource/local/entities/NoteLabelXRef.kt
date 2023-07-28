@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import java.io.Serializable
 
 @Entity(
     tableName = "NoteLabel",
@@ -22,7 +23,7 @@ import androidx.room.Index
         )],
     indices = [Index(value = arrayOf("noteId")), Index(value = arrayOf("labelId"))]
 )
-class NoteLabelXRef(
+data class NoteLabelXRef(
     @ColumnInfo(name = "noteId") val note_id: Long,
     @ColumnInfo(name = "labelId") val label_id: Long
-)
+) : Serializable

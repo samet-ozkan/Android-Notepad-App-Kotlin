@@ -1,25 +1,21 @@
 package com.sametozkan.notepadapp
 
-import android.content.Context
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.AttributeSet
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
-import com.sametozkan.notepadapp.data.datasource.local.AppDatabase
-import com.sametozkan.notepadapp.data.datasource.local.entities.NoteEntity
+import com.sametozkan.notepadapp.data.datasource.local.entities.LabelEntity
+import com.sametozkan.notepadapp.data.datasource.local.entities.NoteLabelXRef
 import com.sametozkan.notepadapp.databinding.ActivityMainBinding
-import com.sametozkan.notepadapp.domain.usecase.AddNotesUseCase
-import com.sametozkan.notepadapp.presentation.HomeFragment
+import com.sametozkan.notepadapp.domain.use_case.AddLabelsUseCase
+import com.sametozkan.notepadapp.domain.use_case.AddNoteLabelXRefUseCase
+import com.sametozkan.notepadapp.domain.use_case.AddNotesUseCase
+import com.sametozkan.notepadapp.presentation.home.HomeFragment
+import com.sametozkan.notepadapp.presentation.search.SearchFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.util.Calendar
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -29,9 +25,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var homeFragment : HomeFragment
 
     @Inject
-    lateinit var addNote : AddNotesUseCase
+    lateinit var searchFragment: SearchFragment
 
-    private lateinit var binding : ActivityMainBinding
+    lateinit var binding : ActivityMainBinding
 
     enum class Items(val id: Int){
         HOME(R.id.home),
@@ -48,23 +44,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         setBottomNavigation()
         setFragment(homeFragment)
-        GlobalScope.launch(Dispatchers.IO) {
-            addNote(NoteEntity(title = "Deneme", text = "Icerik",
-                timestamp = Calendar.getInstance().timeInMillis,
-                isFavorite = true),
-                NoteEntity(title = "Deadnemttttttttttttttttttte", text = "Iqwecerrrrrrrrrrik",
-                    timestamp = Calendar.getInstance().timeInMillis,
-                    isFavorite = true),
-                NoteEntity(title = "Deweqqqnrrrreme", text = "Ice123rik",
-                    timestamp = Calendar.getInstance().timeInMillis,
-                    isFavorite = false),
-                NoteEntity(title = "Drty tr yrt yrt ytr yrty rt ytr y e21neme", text = "I232cerik",
-                    timestamp = Calendar.getInstance().timeInMillis,
-                    isFavorite = true),
-                NoteEntity(title = "Desssneme", text = "Icerty tyrt yt rtyrt ytr yrt y t ssrik",
-                    timestamp = Calendar.getInstance().timeInMillis,
-                    isFavorite = true))
-        }
+
     }
 
     private fun setBottomNavigation(){
@@ -73,6 +53,7 @@ class MainActivity : AppCompatActivity() {
             setOnItemSelectedListener {
                 when(it.itemId){
                     Items.HOME.id -> setFragment(homeFragment)
+                    Items.SEARCH.id -> setFragment(searchFragment)
                 }
                 true
             }

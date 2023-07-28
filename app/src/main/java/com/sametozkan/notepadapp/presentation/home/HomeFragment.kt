@@ -1,4 +1,4 @@
-package com.sametozkan.notepadapp.presentation
+package com.sametozkan.notepadapp.presentation.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -44,13 +44,14 @@ class HomeFragment @Inject constructor() : Fragment() {
     private fun setObserver(){
         viewModel.fetchNotesWithLabels().observe(viewLifecycleOwner){
             it?.let {
+                viewModel.notesWithLabels = it
                 adapter.noteList = it
             }
         }
     }
 
     private fun setRecyclerView(){
-        adapter = NoteListAdapter()
+        adapter = NoteListAdapter(viewModel.notesWithLabels)
         binding.homeRecyclerView.apply {
             adapter = this@HomeFragment.adapter
             layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)

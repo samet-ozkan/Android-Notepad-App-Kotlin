@@ -1,4 +1,4 @@
-package com.sametozkan.notepadapp.domain.usecase
+package com.sametozkan.notepadapp.domain.use_case
 
 import com.sametozkan.notepadapp.data.datasource.local.entities.NoteEntity
 import com.sametozkan.notepadapp.domain.repository.NoteRepository
