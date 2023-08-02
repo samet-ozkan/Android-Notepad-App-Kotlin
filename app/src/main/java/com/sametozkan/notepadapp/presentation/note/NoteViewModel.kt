@@ -23,14 +23,10 @@ class NoteViewModel @Inject constructor(private val updateNotesUseCase: UpdateNo
     fun updateNote(title: String, content: String) {
         noteWithLabels.value?.let { value ->
             val noteEntity = value.note.copy(title = title, text = content)
-            val job = viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(Dispatchers.IO) {
                 updateNotesUseCase(noteEntity)
-            }
-            job.invokeOnCompletion { cause: Throwable? ->
-                if (cause == null){
-                    noteWithLabels.postValue(value.copy(note = noteEntity))
-                    changeFragment.postValue(Constants.NOTE_DETAIL)
-                }
+                noteWithLabels.postValue(value.copy(note = noteEntity))
+                changeFragment.postValue(Constants.NOTE_DETAIL)
             }
         }
     }

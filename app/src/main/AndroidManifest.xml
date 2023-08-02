@@ -18,7 +18,8 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.NotepadApp">
+            android:theme="@style/Theme.NotepadApp"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -28,6 +29,9 @@
         <activity
             android:name=".presentation.note.NoteActivity"
             android:exported="true" />
+
+        <activity android:name=".presentation.label.LabelSelectionActivity" />
+        <activity android:name=".presentation.note.add.AddNoteActivity" />
     </application>
 
 </manifest>

@@ -7,6 +7,8 @@ interface LabelRepository {
 
     fun getAll() : LiveData<List<LabelEntity>>
 
+    fun getLabelsByIds(idList : List<Long>) : LiveData<List<LabelEntity>>
+
     suspend fun insert(vararg label : LabelEntity) : List<Long>
 
     suspend fun update(vararg label : LabelEntity)

@@ -13,6 +13,10 @@ class LabelRepositoryImpl @Inject constructor(private val labelDao : LabelDao) :
         return labelDao.getAll()
     }
 
+    override fun getLabelsByIds(idList : List<Long>): LiveData<List<LabelEntity>> {
+        return labelDao.getLabelsByIds(idList)
+    }
+
     override suspend fun insert(vararg label: LabelEntity) : List<Long> {
         return labelDao.insert(*label)
     }

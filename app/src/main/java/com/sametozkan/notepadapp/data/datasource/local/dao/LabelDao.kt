@@ -15,6 +15,9 @@ interface LabelDao {
     @Query("SELECT * FROM Label ORDER BY label_name ASC")
     fun getAll() : LiveData<List<LabelEntity>>
 
+    @Query("SELECT * FROM Label WHERE label_id IN (:list) ORDER BY label_name ASC")
+    fun getLabelsByIds(list : List<Long>) : LiveData<List<LabelEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(vararg label : LabelEntity) : List<Long>
 

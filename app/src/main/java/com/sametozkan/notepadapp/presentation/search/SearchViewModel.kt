@@ -17,8 +17,7 @@ class SearchViewModel @Inject constructor
 
     private val TAG = "SearchViewModel"
 
-    var keyword = MutableLiveData<String>()
-        private set
+    val keyword = MutableLiveData<String>()
 
     var notesByKeyword: List<NoteWithLabels> = ArrayList()
 
