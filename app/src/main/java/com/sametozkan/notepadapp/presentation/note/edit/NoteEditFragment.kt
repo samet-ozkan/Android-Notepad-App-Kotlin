@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.get
@@ -34,6 +35,7 @@ class NoteEditFragment @Inject constructor() : Fragment(), MenuProvider {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentNoteEditBinding.inflate(inflater, container, false)
+        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
         return binding.root
     }
 
@@ -52,11 +54,11 @@ class NoteEditFragment @Inject constructor() : Fragment(), MenuProvider {
         Log.d(TAG, "setNote: " + viewModel.noteWithLabels.value)
         viewModel.noteWithLabels.value?.let { noteWithLabels ->
 
-                Log.d(TAG, "setNote: binding")
-                binding.apply {
-                    title.setText(noteWithLabels.note.title)
-                    content.setText(noteWithLabels.note.text)
-                }
+            Log.d(TAG, "setNote: binding")
+            binding.apply {
+                title.setText(noteWithLabels.note.title)
+                content.setText(noteWithLabels.note.text)
+            }
 
         }
     }
@@ -68,11 +70,14 @@ class NoteEditFragment @Inject constructor() : Fragment(), MenuProvider {
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
-            R.id.done -> {viewModel.updateNote(
-                binding.title.text.toString(),
-                binding.content.text.toString()
-            )
-                Log.d(TAG, "onMenuItemSelected: itemId is R.id.done")
+            R.id.done -> {
+                viewModel.noteWithLabels.value?.let { noteWithLabels ->
+                    noteWithLabels.note.apply {
+                        title = binding.title.text.toString()
+                        text = binding.content.text.toString()
+                    }
+                    viewModel.updateNote()
+                }
             }
 
             else -> return false

@@ -8,6 +8,8 @@ interface NoteRepository {
 
     fun getAll() : LiveData<List<NoteEntity>>
 
+    fun getNoteWithLabelsById(id : Long) : LiveData<NoteWithLabels>
+
     fun getAllWithLabels() : LiveData<List<NoteWithLabels>>
 
     fun getNotesWithLabelsByKeyword(keyword : String) : LiveData<List<NoteWithLabels>>

@@ -3,9 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/label"
+        android:icon="@drawable/baseline_new_label_24"
+        android:title="Label"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/favorite"
+        android:icon="@drawable/baseline_favorite_border_24"
+        android:title="Favorite"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/edit"
         android:icon="@drawable/baseline_edit_24"
         android:title="Edit"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
+
 
 </menu>

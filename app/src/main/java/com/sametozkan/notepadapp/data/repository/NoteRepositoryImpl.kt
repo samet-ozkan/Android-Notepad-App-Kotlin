@@ -13,6 +13,10 @@ class NoteRepositoryImpl @Inject constructor(private val noteDao: NoteDao) : Not
         return noteDao.getAll()
     }
 
+    override fun getNoteWithLabelsById(id: Long): LiveData<NoteWithLabels> {
+        return noteDao.getNoteWithLabelsById(id)
+    }
+
     override fun getAllWithLabels(): LiveData<List<NoteWithLabels>> {
         return noteDao.getAllWithLabels()
     }

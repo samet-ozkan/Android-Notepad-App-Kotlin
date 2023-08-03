@@ -14,5 +14,5 @@ data class NoteEntity(
     @ColumnInfo(name = "note_title") var title: String,
     @ColumnInfo(name = "note_content") var text: String,
     @ColumnInfo(name = "note_timestamp") val timestamp: Long,
-    @ColumnInfo(name = "note_isFavorite") val isFavorite: Boolean,
+    @ColumnInfo(name = "note_isFavorite") var isFavorite: Boolean,
 ) : Serializable

@@ -23,7 +23,7 @@ import javax.inject.Inject
 class AddNoteViewModel @Inject constructor(
     private val getLabelsByIdsUseCase: GetLabelsByIdsUseCase,
     private val addNotesUseCase: AddNotesUseCase,
-    private val addNoteXrefLabelsUseCase: AddNoteLabelXRefUseCase
+    private val addNoteXrefLabelsUseCase: AddNoteLabelXRefUseCase,
 ) : ViewModel() {
 
     val message = MutableLiveData<String>()

@@ -102,8 +102,13 @@ class AddNoteActivity : AppCompatActivity(), MenuProvider {
             }
 
             R.id.favorite -> {
-                menuItem.setIcon(R.drawable.baseline_favorite_24)
-                viewModel.isFavorite = true
+                if (!viewModel.isFavorite) {
+                    menuItem.setIcon(R.drawable.baseline_favorite_24)
+                    viewModel.isFavorite = true
+                } else {
+                    menuItem.setIcon(R.drawable.baseline_favorite_border_24)
+                    viewModel.isFavorite = false
+                }
             }
         }
         return true

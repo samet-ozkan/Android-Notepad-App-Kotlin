@@ -48,7 +48,7 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder> {
                 date.text = noteEntity.timestamp.toString()
                 root.setOnClickListener {
                     val intent = Intent(it.context, NoteActivity::class.java)
-                    intent.putExtra(Constants.NOTE_ENTITY, noteWithLabels)
+                    intent.putExtra(Constants.NOTE_ENTITY_ID, noteEntity.uid)
                     it.context.startActivity(intent)
                 }
             }
