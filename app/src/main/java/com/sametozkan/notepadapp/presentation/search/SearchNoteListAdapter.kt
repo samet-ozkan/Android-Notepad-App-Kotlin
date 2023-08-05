@@ -51,7 +51,7 @@ class SearchNoteListAdapter : RecyclerView.Adapter<SearchNoteListAdapter.ViewHol
                 content.text = noteEntity.text
                 root.setOnClickListener {
                     val intent = Intent(it.context, NoteActivity::class.java)
-                    intent.putExtra(Constants.NOTE_ENTITY, noteWithLabels)
+                    intent.putExtra(Constants.NOTE_ENTITY_ID, noteWithLabels.note.uid)
                     it.context.startActivity(intent)
                 }
             }

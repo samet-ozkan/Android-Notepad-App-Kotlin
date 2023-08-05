@@ -41,7 +41,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.3"
             android:layout_marginHorizontal="5dp"
-            android:src="@drawable/rounded_background_blue"/>
+            android:src="@drawable/background_blue"/>
 
         <LinearLayout
             android:layout_width="0dp"

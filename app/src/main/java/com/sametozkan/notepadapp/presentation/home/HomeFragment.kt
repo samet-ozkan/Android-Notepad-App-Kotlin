@@ -5,10 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.INVISIBLE
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import androidx.recyclerview.widget.RecyclerView.VISIBLE
 import com.sametozkan.notepadapp.databinding.FragmentHomeBinding
+import com.sametozkan.notepadapp.presentation.filter.FilterDialogFragment
+import com.sametozkan.notepadapp.presentation.note.detail.LabelListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -20,9 +25,7 @@ class HomeFragment @Inject constructor() : Fragment() {
     private lateinit var adapter: NoteListAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -33,18 +36,49 @@ class HomeFragment @Inject constructor() : Fragment() {
 
         setViewModel()
         setRecyclerView()
-        setObserver()
+        observeNotesWithLabels()
+        setFilter()
+        observeFilter()
+    }
+
+    private fun setFilter() {
+        binding.filter.setOnClickListener {
+            val filterDialog = FilterDialogFragment()
+            filterDialog.show(childFragmentManager, "Filter")
+        }
     }
 
     private fun setViewModel() {
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
     }
 
-    private fun setObserver() {
+    private fun observeNotesWithLabels() {
         viewModel.fetchNotesWithLabels().observe(viewLifecycleOwner) {
             it?.let {
                 viewModel.notesWithLabels = it
                 adapter.noteList = it
+            }
+        }
+    }
+
+    private fun observeFilter() {
+        viewModel.getSelectedLabels().observe(viewLifecycleOwner) { selectedLabels ->
+            if (!viewModel.selectedIdList.value!!.isEmpty()) {
+                binding.labelRv.apply {
+                    visibility = VISIBLE
+                    adapter = LabelListAdapter(selectedLabels)
+                    layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                }
+                val filteredNoteList = adapter.noteList.filter { noteWithLabels ->
+                    selectedLabels.any { labelEntity ->
+                        noteWithLabels.labels.contains(labelEntity)
+                    }
+                }
+                adapter.noteList = filteredNoteList
+            } else {
+                binding.labelRv.visibility = INVISIBLE
+                adapter.noteList = viewModel.notesWithLabels
             }
         }
     }

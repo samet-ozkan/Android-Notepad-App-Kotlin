@@ -1,28 +1,19 @@
 package com.sametozkan.notepadapp.presentation.note
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import com.sametozkan.notepadapp.data.datasource.local.entities.LabelEntity
-import com.sametozkan.notepadapp.data.datasource.local.entities.NoteEntity
 import com.sametozkan.notepadapp.data.datasource.local.entities.NoteLabelXRef
 import com.sametozkan.notepadapp.data.datasource.local.entities.NoteWithLabels
-import com.sametozkan.notepadapp.domain.use_case.AddNoteLabelXRefUseCase
-import com.sametozkan.notepadapp.domain.use_case.DeleteNoteLabelXRefUseCase
-import com.sametozkan.notepadapp.domain.use_case.GetLabelsByIdsUseCase
-import com.sametozkan.notepadapp.domain.use_case.GetNoteWithLabelsByIdUseCase
-import com.sametozkan.notepadapp.domain.use_case.GetNotesWithLabelsUseCase
-import com.sametozkan.notepadapp.domain.use_case.UpdateNotesUseCase
-import com.sametozkan.notepadapp.presentation.note.detail.NoteDetailFragment
-import com.sametozkan.notepadapp.presentation.note.edit.NoteEditFragment
+import com.sametozkan.notepadapp.domain.usecase.AddNoteLabelXRefUseCase
+import com.sametozkan.notepadapp.domain.usecase.DeleteNoteLabelXRefUseCase
+import com.sametozkan.notepadapp.domain.usecase.GetLabelsByIdsUseCase
+import com.sametozkan.notepadapp.domain.usecase.GetNoteWithLabelsByIdUseCase
+import com.sametozkan.notepadapp.domain.usecase.UpdateNotesUseCase
 import com.sametozkan.notepadapp.util.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

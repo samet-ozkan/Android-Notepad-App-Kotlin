@@ -18,10 +18,6 @@ import com.sametozkan.notepadapp.databinding.ActivityLabelSelectionBinding
 import com.sametozkan.notepadapp.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
-interface LabelItemClickListener {
-    fun onClick(id: Long, isSelected: Boolean)
-}
-
 @AndroidEntryPoint
 class LabelSelectionActivity : AppCompatActivity(), MenuProvider, LabelItemClickListener {
 

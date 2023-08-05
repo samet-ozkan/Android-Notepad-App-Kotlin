@@ -8,6 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="purple_dark">#35063E</color>
+
     <color name="orange_light">#FFE5CC</color>
     <color name="orange_dark">#FFB266</color>
 

@@ -2,16 +2,13 @@ package com.sametozkan.notepadapp.presentation.note.add
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import com.sametozkan.notepadapp.data.datasource.local.entities.LabelEntity
 import com.sametozkan.notepadapp.data.datasource.local.entities.NoteEntity
 import com.sametozkan.notepadapp.data.datasource.local.entities.NoteLabelXRef
-import com.sametozkan.notepadapp.domain.use_case.AddLabelsUseCase
-import com.sametozkan.notepadapp.domain.use_case.AddNoteLabelXRefUseCase
-import com.sametozkan.notepadapp.domain.use_case.AddNotesUseCase
-import com.sametozkan.notepadapp.domain.use_case.GetLabelsByIdsUseCase
+import com.sametozkan.notepadapp.domain.usecase.AddNoteLabelXRefUseCase
+import com.sametozkan.notepadapp.domain.usecase.AddNotesUseCase
+import com.sametozkan.notepadapp.domain.usecase.GetLabelsByIdsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

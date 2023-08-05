@@ -1,8 +1,7 @@
-package com.sametozkan.notepadapp.domain.use_case
+package com.sametozkan.notepadapp.domain.usecase
 
 import androidx.lifecycle.LiveData
 import com.sametozkan.notepadapp.data.datasource.local.entities.NoteWithLabels
-import com.sametozkan.notepadapp.data.repository.NoteRepositoryImpl
 import com.sametozkan.notepadapp.domain.repository.NoteRepository
 import javax.inject.Inject
 

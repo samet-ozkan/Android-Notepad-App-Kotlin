@@ -2,9 +2,11 @@ package com.sametozkan.notepadapp.presentation.home
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.sametozkan.notepadapp.R
 import com.sametozkan.notepadapp.data.datasource.local.entities.NoteWithLabels
 import com.sametozkan.notepadapp.databinding.ItemNoteBinding
 import com.sametozkan.notepadapp.presentation.note.NoteActivity
@@ -41,8 +43,10 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder> {
 
     class ViewHolder(private val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
 
+        private val TAG = "ViewHolder"
         fun bindItem(noteWithLabels: NoteWithLabels) {
             val noteEntity = noteWithLabels.note
+
             binding.apply {
                 title.text = noteEntity.title
                 date.text = noteEntity.timestamp.toString()
@@ -50,6 +54,13 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder> {
                     val intent = Intent(it.context, NoteActivity::class.java)
                     intent.putExtra(Constants.NOTE_ENTITY_ID, noteEntity.uid)
                     it.context.startActivity(intent)
+                }
+                Log.d(TAG, "bindItem: isFavorite " + noteEntity.isFavorite)
+                if (noteEntity.isFavorite) {
+                    favorite.setImageResource(R.drawable.baseline_favorite_24)
+                }
+                else{
+                    favorite.setImageResource(R.drawable.baseline_favorite_border_24)
                 }
             }
 
