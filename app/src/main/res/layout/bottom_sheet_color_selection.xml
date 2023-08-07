@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        style="@style/Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Select Color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/yellow"
+            style="@style/ColorItem"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/background_yellow" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/blue"
+            style="@style/ColorItem"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/background_blue" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/red"
+            style="@style/ColorItem"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/background_red" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/pink"
+            style="@style/ColorItem"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/background_pink" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/orange"
+            style="@style/ColorItem"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/background_orange" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/green"
+            style="@style/ColorItem"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/background_green" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

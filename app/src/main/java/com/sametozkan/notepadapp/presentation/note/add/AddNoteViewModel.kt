@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
+import com.sametozkan.notepadapp.R
 import com.sametozkan.notepadapp.data.datasource.local.entities.NoteEntity
 import com.sametozkan.notepadapp.data.datasource.local.entities.NoteLabelXRef
 import com.sametozkan.notepadapp.domain.usecase.AddNoteLabelXRefUseCase
@@ -28,6 +29,7 @@ class AddNoteViewModel @Inject constructor(
     var title: String? = null
     var content: String? = null
     var isFavorite = false
+    var color = R.drawable.background_blue
 
 
     fun fetchLabelsByIds() = idList.switchMap {
@@ -65,7 +67,8 @@ class AddNoteViewModel @Inject constructor(
                             title = title!!,
                             text = content!!,
                             timestamp = Calendar.getInstance().timeInMillis,
-                            isFavorite = isFavorite
+                            isFavorite = isFavorite,
+                            color = color
                         )
                     )
                 }

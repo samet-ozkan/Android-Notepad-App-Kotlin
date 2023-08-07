@@ -16,13 +16,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sametozkan.notepadapp.R
 import com.sametozkan.notepadapp.data.datasource.local.entities.LabelEntity
 import com.sametozkan.notepadapp.databinding.ActivityAddNoteBinding
+import com.sametozkan.notepadapp.presentation.color.ColorEnum
+import com.sametozkan.notepadapp.presentation.color.ColorSelection
+import com.sametozkan.notepadapp.presentation.color.ColorSelectionBottomSheetFragment
 import com.sametozkan.notepadapp.presentation.label.LabelSelectionActivity
 import com.sametozkan.notepadapp.presentation.note.detail.LabelListAdapter
 import com.sametozkan.notepadapp.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddNoteActivity : AppCompatActivity(), MenuProvider {
+class AddNoteActivity : AppCompatActivity(), MenuProvider, ColorSelection {
 
     private lateinit var binding: ActivityAddNoteBinding
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
@@ -34,12 +37,17 @@ class AddNoteActivity : AppCompatActivity(), MenuProvider {
         super.onCreate(savedInstanceState)
         binding = ActivityAddNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
+        setToolbar()
         addMenuProvider(this)
         setLabelRecyclerView()
         setObserver()
         setResultLauncher()
         setTextChangedListener()
+    }
+
+    private fun setToolbar() {
+        setSupportActionBar(binding.toolbar)
+        binding.toolbar.setBackgroundResource(viewModel.color)
     }
 
     private fun setTextChangedListener() {
@@ -90,6 +98,9 @@ class AddNoteActivity : AppCompatActivity(), MenuProvider {
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
+            R.id.color -> ColorSelectionBottomSheetFragment()
+                .show(supportFragmentManager, "Color Selection")
+
             R.id.done -> {
                 viewModel.save()
                 finish()
@@ -112,6 +123,11 @@ class AddNoteActivity : AppCompatActivity(), MenuProvider {
             }
         }
         return true
+    }
+
+    override fun onColorSelected(color: ColorEnum) {
+        viewModel.color = color.colorId
+        binding.toolbar.setBackgroundResource(color.colorId)
     }
 
 }

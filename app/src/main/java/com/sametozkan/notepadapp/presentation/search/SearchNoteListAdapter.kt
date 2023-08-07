@@ -14,13 +14,13 @@ import com.sametozkan.notepadapp.util.Constants
 
 class SearchNoteListAdapter : RecyclerView.Adapter<SearchNoteListAdapter.ViewHolder> {
 
-    var noteList : List<NoteWithLabels>
+    var noteList: List<NoteWithLabels>
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    constructor(noteList : List<NoteWithLabels>){
+    constructor(noteList: List<NoteWithLabels>) {
         this.noteList = noteList
     }
 
@@ -28,8 +28,10 @@ class SearchNoteListAdapter : RecyclerView.Adapter<SearchNoteListAdapter.ViewHol
         parent: ViewGroup,
         viewType: Int
     ): SearchNoteListAdapter.ViewHolder {
-        val binding = ItemNoteSearchBinding.inflate(LayoutInflater.from(parent.context),
-            parent, false)
+        val binding = ItemNoteSearchBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
         return ViewHolder(binding)
     }
 
@@ -42,9 +44,10 @@ class SearchNoteListAdapter : RecyclerView.Adapter<SearchNoteListAdapter.ViewHol
         return noteList.size
     }
 
-    class ViewHolder(private val binding: ItemNoteSearchBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: ItemNoteSearchBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bindItem(noteWithLabels: NoteWithLabels){
+        fun bindItem(noteWithLabels: NoteWithLabels) {
             val noteEntity = noteWithLabels.note
             binding.apply {
                 title.text = noteEntity.title
@@ -54,6 +57,7 @@ class SearchNoteListAdapter : RecyclerView.Adapter<SearchNoteListAdapter.ViewHol
                     intent.putExtra(Constants.NOTE_ENTITY_ID, noteWithLabels.note.uid)
                     it.context.startActivity(intent)
                 }
+                divider.setImageResource(noteEntity.color)
             }
         }
     }

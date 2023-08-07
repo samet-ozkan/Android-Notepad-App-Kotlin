@@ -35,7 +35,6 @@ class NoteEditFragment @Inject constructor() : Fragment(), MenuProvider {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentNoteEditBinding.inflate(inflater, container, false)
-        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
         return binding.root
     }
 
@@ -77,6 +76,7 @@ class NoteEditFragment @Inject constructor() : Fragment(), MenuProvider {
                         text = binding.content.text.toString()
                     }
                     viewModel.updateNote()
+                    viewModel.changeFragment.value = Constants.NOTE_DETAIL
                 }
             }
 

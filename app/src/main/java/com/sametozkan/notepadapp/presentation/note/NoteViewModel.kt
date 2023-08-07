@@ -37,10 +37,11 @@ class NoteViewModel @Inject constructor(
             viewModelScope.launch(Dispatchers.IO) {
                 Log.d(TAG, "updateNote: " + noteWithLabels.note.isFavorite)
                 updateNotesUseCase(noteWithLabels.note)
-                changeFragment.postValue(Constants.NOTE_DETAIL)
             }
         }
     }
+
+
 
     fun fetchNoteWithLabelsById(id: Long) = getNoteWithLabelsByIdUseCase(id)
 

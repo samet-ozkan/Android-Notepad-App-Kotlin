@@ -58,10 +58,10 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder> {
                 Log.d(TAG, "bindItem: isFavorite " + noteEntity.isFavorite)
                 if (noteEntity.isFavorite) {
                     favorite.setImageResource(R.drawable.baseline_favorite_24)
-                }
-                else{
+                } else {
                     favorite.setImageResource(R.drawable.baseline_favorite_border_24)
                 }
+                title.setBackgroundResource(noteEntity.color)
             }
 
         }

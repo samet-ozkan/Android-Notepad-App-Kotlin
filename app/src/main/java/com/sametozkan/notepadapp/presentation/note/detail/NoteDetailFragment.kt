@@ -27,6 +27,9 @@ import com.sametozkan.notepadapp.data.datasource.local.entities.LabelEntity
 import com.sametozkan.notepadapp.data.datasource.local.entities.NoteEntity
 import com.sametozkan.notepadapp.data.datasource.local.entities.NoteWithLabels
 import com.sametozkan.notepadapp.databinding.FragmentNoteDetailBinding
+import com.sametozkan.notepadapp.presentation.color.ColorEnum
+import com.sametozkan.notepadapp.presentation.color.ColorSelection
+import com.sametozkan.notepadapp.presentation.color.ColorSelectionBottomSheetFragment
 import com.sametozkan.notepadapp.presentation.label.LabelSelectionActivity
 import com.sametozkan.notepadapp.presentation.note.LabelSelection
 import com.sametozkan.notepadapp.presentation.note.NoteViewModel
@@ -56,7 +59,6 @@ class NoteDetailFragment : Fragment(), MenuProvider {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentNoteDetailBinding.inflate(inflater, container, false)
-        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
         return binding.root
     }
 
@@ -84,14 +86,6 @@ class NoteDetailFragment : Fragment(), MenuProvider {
         menuHost.addMenuProvider(this)
     }
 
-    private fun setLabelRv() {
-        labelRvAdapter = LabelListAdapter(ArrayList())
-        binding.labelRecyclerView.apply {
-            adapter = labelRvAdapter
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        }
-    }
-
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menu.clear()
         menuInflater.inflate(R.menu.note_detail_menu, menu)
@@ -106,6 +100,8 @@ class NoteDetailFragment : Fragment(), MenuProvider {
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
+            R.id.color -> ColorSelectionBottomSheetFragment()
+                .show(requireActivity().supportFragmentManager, "Color Selection")
             R.id.edit -> viewModel.changeFragment.value = Constants.NOTE_EDIT
             R.id.label -> labelSelection.startLabelSelectionActivity()
             R.id.favorite -> {
@@ -126,5 +122,13 @@ class NoteDetailFragment : Fragment(), MenuProvider {
             else -> return false
         }
         return true
+    }
+
+    private fun setLabelRv() {
+        labelRvAdapter = LabelListAdapter(ArrayList())
+        binding.labelRecyclerView.apply {
+            adapter = labelRvAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
     }
 }

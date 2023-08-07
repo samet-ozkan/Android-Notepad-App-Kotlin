@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.sametozkan.notepadapp.data.datasource.local.entities.NoteWithLabels
 import com.sametozkan.notepadapp.databinding.ActivityNoteBinding
+import com.sametozkan.notepadapp.presentation.color.ColorEnum
+import com.sametozkan.notepadapp.presentation.color.ColorSelection
 import com.sametozkan.notepadapp.presentation.label.LabelSelectionActivity
 import com.sametozkan.notepadapp.presentation.note.detail.NoteDetailFragment
 import com.sametozkan.notepadapp.presentation.note.edit.NoteEditFragment
@@ -23,7 +25,7 @@ interface LabelSelection {
 }
 
 @AndroidEntryPoint
-class NoteActivity : AppCompatActivity(), LabelSelection {
+class NoteActivity : AppCompatActivity(), LabelSelection, ColorSelection {
 
     private val TAG = "NoteActivity"
     private lateinit var binding: ActivityNoteBinding
@@ -34,11 +36,15 @@ class NoteActivity : AppCompatActivity(), LabelSelection {
         super.onCreate(savedInstanceState)
         binding = ActivityNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        setToolbar()
         getExtras()
         setFragment(NoteDetailFragment())
         setObserver()
         setResultLauncher()
+    }
+
+    private fun setToolbar(){
+        setSupportActionBar(binding.toolbar)
     }
 
     private fun setResultLauncher() {
@@ -64,6 +70,7 @@ class NoteActivity : AppCompatActivity(), LabelSelection {
                 viewModel.fetchNoteWithLabelsById(noteId).observe(this@NoteActivity) {
                     Log.d(TAG, "getExtras: " + it)
                     viewModel.noteWithLabels.postValue(it)
+                    binding.toolbar.setBackgroundResource(it.note.color)
                 }
             }
         }
@@ -91,6 +98,13 @@ class NoteActivity : AppCompatActivity(), LabelSelection {
             val intent = Intent(this, LabelSelectionActivity::class.java)
             intent.putExtra(Constants.LABEL_ID_LIST, idList.toLongArray())
             resultLauncher.launch(intent)
+        }
+    }
+
+    override fun onColorSelected(color: ColorEnum) {
+        viewModel.noteWithLabels.value?.let {
+            it.note.color = color.colorId
+            viewModel.updateNote()
         }
     }
 

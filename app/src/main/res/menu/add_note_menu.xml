@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/color"
+        android:icon="@drawable/baseline_color_lens_24"
+        android:title="Color"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/selectLabel"
         android:icon="@drawable/baseline_new_label_24"
         android:title="Label"

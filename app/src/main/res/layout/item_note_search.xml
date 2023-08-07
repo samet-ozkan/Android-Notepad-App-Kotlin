@@ -40,6 +40,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.3"
+            android:id="@+id/divider"
             android:layout_marginHorizontal="5dp"
             android:src="@drawable/background_blue"/>
 
