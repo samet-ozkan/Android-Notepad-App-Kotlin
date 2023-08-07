@@ -25,9 +25,6 @@ class MainActivity : AppCompatActivity() {
     enum class Items(val id: Int){
         HOME(R.id.home),
         SEARCH(R.id.search),
-        ADD(R.id.add),
-        FAVORITES(R.id.favorites),
-        SETTINGS(R.id.settings)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +44,6 @@ class MainActivity : AppCompatActivity() {
                 when(it.itemId){
                     Items.HOME.id -> setFragment(homeFragment)
                     Items.SEARCH.id -> setFragment(searchFragment)
-                    Items.ADD.id -> startActivity(Intent(context, AddNoteActivity::class.java))
                 }
                 true
             }

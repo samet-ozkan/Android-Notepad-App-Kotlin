@@ -4,20 +4,20 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.sametozkan.notepadapp.data.datasource.local.entities.NoteWithLabels
 import com.sametozkan.notepadapp.databinding.ActivityNoteBinding
 import com.sametozkan.notepadapp.presentation.color.ColorEnum
-import com.sametozkan.notepadapp.presentation.color.ColorSelection
+import com.sametozkan.notepadapp.presentation.color.ColorSelectionListener
+import com.sametozkan.notepadapp.presentation.delete.DeleteDialogListener
 import com.sametozkan.notepadapp.presentation.label.LabelSelectionActivity
 import com.sametozkan.notepadapp.presentation.note.detail.NoteDetailFragment
 import com.sametozkan.notepadapp.presentation.note.edit.NoteEditFragment
 import com.sametozkan.notepadapp.util.Constants
-import com.sametozkan.notepadapp.util.getSerializable
 import dagger.hilt.android.AndroidEntryPoint
 
 interface LabelSelection {
@@ -25,7 +25,7 @@ interface LabelSelection {
 }
 
 @AndroidEntryPoint
-class NoteActivity : AppCompatActivity(), LabelSelection, ColorSelection {
+class NoteActivity : AppCompatActivity(), LabelSelection, ColorSelectionListener, DeleteDialogListener {
 
     private val TAG = "NoteActivity"
     private lateinit var binding: ActivityNoteBinding
@@ -41,9 +41,16 @@ class NoteActivity : AppCompatActivity(), LabelSelection, ColorSelection {
         setFragment(NoteDetailFragment())
         setObserver()
         setResultLauncher()
+        observeMessage()
     }
 
-    private fun setToolbar(){
+    private fun observeMessage() {
+        viewModel.message.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun setToolbar() {
         setSupportActionBar(binding.toolbar)
     }
 
@@ -66,11 +73,15 @@ class NoteActivity : AppCompatActivity(), LabelSelection, ColorSelection {
         intent.extras?.let {
             intent.apply {
                 val noteId = this.getLongExtra(Constants.NOTE_ENTITY_ID, 1)
-                Log.d(TAG, "getExtras: noteId " + noteId)
                 viewModel.fetchNoteWithLabelsById(noteId).observe(this@NoteActivity) {
-                    Log.d(TAG, "getExtras: " + it)
-                    viewModel.noteWithLabels.postValue(it)
-                    binding.toolbar.setBackgroundResource(it.note.color)
+                    it?.let {
+                        viewModel.noteWithLabels.postValue(it)
+                        binding.toolbar.setBackgroundResource(it.note.color)
+                    }
+                        ?: run {
+                            finish()
+                        }
+
                 }
             }
         }
@@ -106,6 +117,10 @@ class NoteActivity : AppCompatActivity(), LabelSelection, ColorSelection {
             it.note.color = color.colorId
             viewModel.updateNote()
         }
+    }
+
+    override fun onClickDelete() {
+        viewModel.deleteNote()
     }
 
 }

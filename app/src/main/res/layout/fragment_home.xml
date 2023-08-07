@@ -17,13 +17,13 @@
             android:padding="10dp">
 
             <ImageView
-                android:id="@+id/sort"
+                android:id="@+id/filter"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
-                android:src="@drawable/baseline_sort_24" />
+                android:src="@drawable/baseline_filter_alt_24" />
 
             <TextView
                 android:id="@+id/title"
@@ -35,13 +35,15 @@
                 android:text="Notepad App" />
 
             <ImageView
-                android:id="@+id/filter"
+                android:id="@+id/add"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
-                android:src="@drawable/baseline_filter_alt_24" />
+                android:src="@drawable/baseline_add_24" />
+
+
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 

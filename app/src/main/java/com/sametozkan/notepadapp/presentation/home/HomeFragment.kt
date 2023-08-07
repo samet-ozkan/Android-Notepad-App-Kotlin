@@ -1,5 +1,6 @@
 package com.sametozkan.notepadapp.presentation.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.INVISIBLE
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import androidx.recyclerview.widget.RecyclerView.VISIBLE
 import com.sametozkan.notepadapp.databinding.FragmentHomeBinding
 import com.sametozkan.notepadapp.presentation.filter.FilterDialogFragment
+import com.sametozkan.notepadapp.presentation.note.add.AddNoteActivity
 import com.sametozkan.notepadapp.presentation.note.detail.LabelListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -37,14 +38,18 @@ class HomeFragment @Inject constructor() : Fragment() {
         setViewModel()
         setRecyclerView()
         observeNotesWithLabels()
-        setFilter()
+        setCustomToolbar()
         observeFilter()
     }
 
-    private fun setFilter() {
+    private fun setCustomToolbar() {
         binding.filter.setOnClickListener {
             val filterDialog = FilterDialogFragment()
             filterDialog.show(childFragmentManager, "Filter")
+        }
+
+        binding.add.setOnClickListener {
+            startActivity(Intent(context, AddNoteActivity::class.java))
         }
     }
 
@@ -77,7 +82,7 @@ class HomeFragment @Inject constructor() : Fragment() {
                 }
                 adapter.noteList = filteredNoteList
             } else {
-                binding.labelRv.visibility = INVISIBLE
+                binding.labelRv.visibility = View.GONE
                 adapter.noteList = viewModel.notesWithLabels
             }
         }

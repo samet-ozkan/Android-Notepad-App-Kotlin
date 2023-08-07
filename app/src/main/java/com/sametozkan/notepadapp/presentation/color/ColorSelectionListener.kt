@@ -1,5 +1,5 @@
 package com.sametozkan.notepadapp.presentation.color
 
-interface ColorSelection {
+interface ColorSelectionListener {
     fun onColorSelected(color: ColorEnum)
 }

@@ -1,8 +1,6 @@
 package com.sametozkan.notepadapp.presentation.note.detail
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,31 +9,19 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.sametozkan.notepadapp.R
-import com.sametozkan.notepadapp.data.datasource.local.entities.LabelEntity
-import com.sametozkan.notepadapp.data.datasource.local.entities.NoteEntity
-import com.sametozkan.notepadapp.data.datasource.local.entities.NoteWithLabels
 import com.sametozkan.notepadapp.databinding.FragmentNoteDetailBinding
-import com.sametozkan.notepadapp.presentation.color.ColorEnum
-import com.sametozkan.notepadapp.presentation.color.ColorSelection
 import com.sametozkan.notepadapp.presentation.color.ColorSelectionBottomSheetFragment
-import com.sametozkan.notepadapp.presentation.label.LabelSelectionActivity
+import com.sametozkan.notepadapp.presentation.delete.DeleteDialogFragment
 import com.sametozkan.notepadapp.presentation.note.LabelSelection
 import com.sametozkan.notepadapp.presentation.note.NoteViewModel
 import com.sametozkan.notepadapp.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 
 @AndroidEntryPoint
 class NoteDetailFragment : Fragment(), MenuProvider {
@@ -100,8 +86,12 @@ class NoteDetailFragment : Fragment(), MenuProvider {
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
+            R.id.delete -> DeleteDialogFragment()
+                .show(requireActivity().supportFragmentManager, "Delete Dialog")
+
             R.id.color -> ColorSelectionBottomSheetFragment()
                 .show(requireActivity().supportFragmentManager, "Color Selection")
+
             R.id.edit -> viewModel.changeFragment.value = Constants.NOTE_EDIT
             R.id.label -> labelSelection.startLabelSelectionActivity()
             R.id.favorite -> {

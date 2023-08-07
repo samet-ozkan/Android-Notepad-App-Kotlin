@@ -8,6 +8,7 @@ import com.sametozkan.notepadapp.data.datasource.local.entities.NoteLabelXRef
 import com.sametozkan.notepadapp.data.datasource.local.entities.NoteWithLabels
 import com.sametozkan.notepadapp.domain.usecase.AddNoteLabelXRefUseCase
 import com.sametozkan.notepadapp.domain.usecase.DeleteNoteLabelXRefUseCase
+import com.sametozkan.notepadapp.domain.usecase.DeleteNotesUseCase
 import com.sametozkan.notepadapp.domain.usecase.GetLabelsByIdsUseCase
 import com.sametozkan.notepadapp.domain.usecase.GetNoteWithLabelsByIdUseCase
 import com.sametozkan.notepadapp.domain.usecase.UpdateNotesUseCase
@@ -22,8 +23,8 @@ class NoteViewModel @Inject constructor(
     private val updateNotesUseCase: UpdateNotesUseCase,
     private val addNoteLabelXRefUseCase: AddNoteLabelXRefUseCase,
     private val deleteNoteLabelXRefUseCase: DeleteNoteLabelXRefUseCase,
-    private val getLabelsByIdsUseCase: GetLabelsByIdsUseCase,
-    private val getNoteWithLabelsByIdUseCase: GetNoteWithLabelsByIdUseCase
+    private val getNoteWithLabelsByIdUseCase: GetNoteWithLabelsByIdUseCase,
+    private val deleteNotesUseCase: DeleteNotesUseCase
 ) :
     ViewModel() {
 
@@ -32,16 +33,25 @@ class NoteViewModel @Inject constructor(
     val changeFragment = MutableLiveData<String>()
     val noteWithLabels = MutableLiveData<NoteWithLabels>()
     var resultLabels = ArrayList<Long>()
+    val message = MutableLiveData<String>()
+
     fun updateNote() {
         noteWithLabels.value?.let { noteWithLabels ->
             viewModelScope.launch(Dispatchers.IO) {
-                Log.d(TAG, "updateNote: " + noteWithLabels.note.isFavorite)
                 updateNotesUseCase(noteWithLabels.note)
+                message.postValue("Note updated successfully!")
             }
         }
     }
 
-
+    fun deleteNote() {
+        noteWithLabels.value?.let { noteWithLabels ->
+            viewModelScope.launch(Dispatchers.IO) {
+                deleteNotesUseCase(noteWithLabels.note)
+                message.postValue("Note deleted successfully!")
+            }
+        }
+    }
 
     fun fetchNoteWithLabelsById(id: Long) = getNoteWithLabelsByIdUseCase(id)
 

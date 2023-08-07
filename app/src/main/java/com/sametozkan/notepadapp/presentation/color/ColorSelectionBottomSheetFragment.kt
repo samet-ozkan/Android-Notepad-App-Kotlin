@@ -11,12 +11,12 @@ import com.sametozkan.notepadapp.databinding.BottomSheetColorSelectionBinding
 class ColorSelectionBottomSheetFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: BottomSheetColorSelectionBinding
-    private lateinit var colorSelection: ColorSelection
+    private lateinit var colorSelection: ColorSelectionListener
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
-            colorSelection = context as ColorSelection
+            colorSelection = context as ColorSelectionListener
         } catch (e: ClassCastException) {
             e.printStackTrace()
         }

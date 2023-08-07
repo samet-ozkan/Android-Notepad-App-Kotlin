@@ -14,10 +14,9 @@ import androidx.core.view.MenuProvider
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sametozkan.notepadapp.R
-import com.sametozkan.notepadapp.data.datasource.local.entities.LabelEntity
 import com.sametozkan.notepadapp.databinding.ActivityAddNoteBinding
 import com.sametozkan.notepadapp.presentation.color.ColorEnum
-import com.sametozkan.notepadapp.presentation.color.ColorSelection
+import com.sametozkan.notepadapp.presentation.color.ColorSelectionListener
 import com.sametozkan.notepadapp.presentation.color.ColorSelectionBottomSheetFragment
 import com.sametozkan.notepadapp.presentation.label.LabelSelectionActivity
 import com.sametozkan.notepadapp.presentation.note.detail.LabelListAdapter
@@ -25,7 +24,7 @@ import com.sametozkan.notepadapp.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddNoteActivity : AppCompatActivity(), MenuProvider, ColorSelection {
+class AddNoteActivity : AppCompatActivity(), MenuProvider, ColorSelectionListener {
 
     private lateinit var binding: ActivityAddNoteBinding
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
