@@ -18,18 +18,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SearchFragment @Inject constructor(): Fragment() {
+class SearchFragment @Inject constructor() : Fragment() {
 
     private val TAG = "SearchFragment"
-    
-    private lateinit var binding : FragmentSearchBinding
-    private lateinit var viewModel : SearchViewModel
-    private lateinit var adapter : SearchNoteListAdapter
+
+    private lateinit var binding: FragmentSearchBinding
+    private lateinit var viewModel: SearchViewModel
+    private lateinit var adapter: SearchNoteListAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
@@ -37,28 +35,25 @@ class SearchFragment @Inject constructor(): Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as AppCompatActivity).apply {
-            setSupportActionBar(binding.toolbar)
-        }
         setViewModel()
         setRecyclerView()
         setSearchView()
         setObserver()
     }
 
-    private fun setViewModel(){
+    private fun setViewModel() {
         viewModel = ViewModelProvider(this@SearchFragment).get(SearchViewModel::class.java)
     }
 
-    private fun setRecyclerView(){
+    private fun setRecyclerView() {
         adapter = SearchNoteListAdapter(viewModel.notesByKeyword)
         binding.searchRecyclerView.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = this@SearchFragment.adapter
         }
     }
 
-    private fun setSearchView(){
+    private fun setSearchView() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -69,8 +64,16 @@ class SearchFragment @Inject constructor(): Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 Log.d(TAG, "onQueryTextChange: " + newText)
                 newText?.let {
-                    viewModel.keyword.value = newText
-                    Log.d(TAG, "onQueryTextChange: Keyword value changed")
+                    if (newText.isEmpty()) {
+                        binding.searchRecyclerView.visibility = View.GONE
+                        binding.empty.emptyState.visibility = View.VISIBLE
+                    } else {
+                        viewModel.keyword.value = newText
+                        Log.d(TAG, "onQueryTextChange: Keyword value changed")
+                        binding.searchRecyclerView.visibility = View.VISIBLE
+                        binding.empty.emptyState.visibility = View.GONE
+                    }
+
                     return true
                 }
                 return false
@@ -78,12 +81,22 @@ class SearchFragment @Inject constructor(): Fragment() {
         })
     }
 
-    private fun setObserver(){
-        viewModel.fetchNotesByKeyword().observe(viewLifecycleOwner){
-            Log.d(TAG, "setObserver: " + it.toString())
+    private fun setObserver() {
+        viewModel.fetchNotesByKeyword().observe(viewLifecycleOwner) {
+
             it?.let {
-                viewModel.notesByKeyword = it
-                adapter.noteList = it
+                if (it.isEmpty()) {
+                    binding.searchRecyclerView.visibility = View.GONE
+                    binding.empty.emptyState.visibility = View.VISIBLE
+                } else {
+                    viewModel.notesByKeyword = it
+                    adapter.noteList = it
+                    if (binding.searchRecyclerView.visibility != View.VISIBLE && binding.empty.emptyState.visibility != View.GONE) {
+
+                    }
+                    binding.searchRecyclerView.visibility = View.VISIBLE
+                    binding.empty.emptyState.visibility = View.GONE
+                }
             }
         }
     }

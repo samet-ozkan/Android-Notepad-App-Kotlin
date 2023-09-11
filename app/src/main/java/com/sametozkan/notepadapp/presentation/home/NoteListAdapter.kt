@@ -11,6 +11,7 @@ import com.sametozkan.notepadapp.data.datasource.local.entities.NoteWithLabels
 import com.sametozkan.notepadapp.databinding.ItemNoteBinding
 import com.sametozkan.notepadapp.presentation.note.NoteActivity
 import com.sametozkan.notepadapp.util.Constants
+import com.sametozkan.notepadapp.util.Utils
 import java.io.Serializable
 
 class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder> {
@@ -49,7 +50,7 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder> {
 
             binding.apply {
                 title.text = noteEntity.title
-                date.text = noteEntity.timestamp.toString()
+                date.text = Utils.convertTimestampToString(noteEntity.timestamp)
                 root.setOnClickListener {
                     val intent = Intent(it.context, NoteActivity::class.java)
                     intent.putExtra(Constants.NOTE_ENTITY_ID, noteEntity.uid)

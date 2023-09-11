@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -47,6 +48,11 @@ class AddNoteActivity : AppCompatActivity(), MenuProvider, ColorSelectionListene
     private fun setToolbar() {
         setSupportActionBar(binding.toolbar)
         binding.toolbar.setBackgroundResource(viewModel.color)
+        supportActionBar?.let { actionBar ->
+            actionBar.apply {
+                setDisplayHomeAsUpEnabled(true)
+            }
+        }
     }
 
     private fun setTextChangedListener() {
@@ -79,6 +85,11 @@ class AddNoteActivity : AppCompatActivity(), MenuProvider, ColorSelectionListene
         viewModel.fetchLabelsByIds().observe(this) {
             if (!it.isNullOrEmpty()) {
                 adapter.labelList = it
+                binding.labelRecyclerView.visibility = View.VISIBLE
+                binding.empty.emptyState.visibility = View.GONE
+            } else {
+                binding.labelRecyclerView.visibility = View.GONE
+                binding.empty.emptyState.visibility = View.VISIBLE
             }
         }
     }
@@ -97,8 +108,11 @@ class AddNoteActivity : AppCompatActivity(), MenuProvider, ColorSelectionListene
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
-            R.id.color -> ColorSelectionBottomSheetFragment()
-                .show(supportFragmentManager, "Color Selection")
+            android.R.id.home -> finish()
+            R.id.color -> ColorSelectionBottomSheetFragment().show(
+                supportFragmentManager,
+                "Color Selection"
+            )
 
             R.id.done -> {
                 viewModel.save()
@@ -108,6 +122,7 @@ class AddNoteActivity : AppCompatActivity(), MenuProvider, ColorSelectionListene
             R.id.selectLabel -> {
                 val intent = Intent(this, LabelSelectionActivity::class.java)
                 intent.putExtra(Constants.LABEL_ID_LIST, viewModel.idList.value?.toLongArray())
+                intent.putExtra(Constants.COLOR, viewModel.color)
                 resultLauncher.launch(intent)
             }
 

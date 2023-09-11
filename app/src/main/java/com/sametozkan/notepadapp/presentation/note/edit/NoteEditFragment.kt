@@ -1,5 +1,6 @@
 package com.sametozkan.notepadapp.presentation.note.edit
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -29,6 +31,17 @@ class NoteEditFragment @Inject constructor() : Fragment(), MenuProvider {
     private lateinit var binding: FragmentNoteEditBinding
     val viewModel: NoteViewModel by activityViewModels()
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (context as AppCompatActivity).supportActionBar?.let {
+            it.apply {
+                setDisplayHomeAsUpEnabled(false)
+                setDisplayShowTitleEnabled(true)
+                title = "Edit Note"
+            }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,6 +55,13 @@ class NoteEditFragment @Inject constructor() : Fragment(), MenuProvider {
         super.onViewCreated(view, savedInstanceState)
         setMenu()
         setNote()
+        observeMessage()
+    }
+
+    private fun observeMessage() {
+        viewModel.message.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setMenu() {

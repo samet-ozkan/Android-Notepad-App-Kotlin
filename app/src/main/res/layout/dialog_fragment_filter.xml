@@ -1,16 +1,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_rounded_bottom_corners"
+    android:elevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/dialog"
         android:layout_width="350dp"
         android:layout_height="350dp"
-        android:background="@drawable/background_dialog"
         android:elevation="10dp"
         android:orientation="vertical"
-        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,31 +23,52 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:gravity="center"
             android:text="Filter Notes using Labels"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@id/labelsRecyclerView"
             app:layout_constraintEnd_toEndOf="@id/dialog"
             app:layout_constraintHeight_percent="0.1"
             app:layout_constraintStart_toStartOf="@id/dialog"
             app:layout_constraintTop_toTopOf="@id/dialog" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/labelsRecyclerView"
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:padding="10dp"
-            style="@style/RecyclerViewScrollbarStyle"
             app:layout_constraintBottom_toTopOf="@id/buttonLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+            app:layout_constraintTop_toBottomOf="@id/titleTextView">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/labelsRecyclerView"
+                style="@style/RecyclerViewScrollbarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginHorizontal="10dp"
+                android:scrollbars="vertical"
+                tools:listitem="@layout/item_label_filter" />
+
+            <include
+                android:id="@+id/empty"
+                layout="@layout/view_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+        </RelativeLayout>
+
 
         <LinearLayout
             android:id="@+id/buttonLayout"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:gravity="end|center"
+            android:layout_margin="10dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@id/dialog"
             app:layout_constraintEnd_toEndOf="@id/dialog"
@@ -56,12 +78,22 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/cancelButton"
-                style="@style/Button"
+                style="@style/BlackButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="1"
                 android:text="Cancel" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/filterButton"
-                style="@style/Button"
+                style="@style/BlackButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="1"
                 android:text="Filter" />
 
         </LinearLayout>

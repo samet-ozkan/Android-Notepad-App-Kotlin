@@ -28,10 +28,12 @@
 
         <activity
             android:name=".presentation.note.NoteActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true" />
 
         <activity android:name=".presentation.label.LabelSelectionActivity" />
-        <activity android:name=".presentation.note.add.AddNoteActivity" />
+        <activity android:name=".presentation.note.add.AddNoteActivity"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

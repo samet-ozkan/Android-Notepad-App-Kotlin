@@ -10,7 +10,7 @@ import com.sametozkan.notepadapp.databinding.ItemLabelSelectionBinding
 class LabelSelectionAdapter(
     labelList: List<LabelEntity>,
     selectedLabelIdList: List<Long>,
-    private val labelItemClickListener: LabelItemClickListener
+    private val labelItemClickListener: LabelClickListener
 ) :
     RecyclerView.Adapter<LabelSelectionAdapter.ViewHolder>() {
 
@@ -43,10 +43,8 @@ class LabelSelectionAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var label = labelList.get(holder.adapterPosition)
-        if (selectedLabelIdList.contains(label.uid)) {
-            holder.binding.label.isChecked = true
-        }
         holder.bindItem(label, labelItemClickListener)
+        holder.binding.label.isChecked = selectedLabelIdList.contains(label.uid)
     }
 
     class ViewHolder(val binding: ItemLabelSelectionBinding) :
@@ -54,11 +52,12 @@ class LabelSelectionAdapter(
 
         private val TAG = "LabelSelectionAdapter"
 
-        fun bindItem(label: LabelEntity, labelItemClickListener: LabelItemClickListener) {
+        fun bindItem(label: LabelEntity, labelItemClickListener: LabelClickListener) {
             binding.label.apply {
                 text = label.name
+                setOnCheckedChangeListener(null)
                 setOnClickListener {
-                    labelItemClickListener.onClick(label.uid, this.isChecked)
+                    labelItemClickListener.onLabelClicked(label.uid, this.isChecked)
                     Log.d(TAG, "bindItem: isChecked " + this.isChecked)
                 }
             }

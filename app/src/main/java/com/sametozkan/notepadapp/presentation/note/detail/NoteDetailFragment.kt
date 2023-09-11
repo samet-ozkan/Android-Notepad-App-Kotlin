@@ -9,6 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -21,6 +22,7 @@ import com.sametozkan.notepadapp.presentation.delete.DeleteDialogFragment
 import com.sametozkan.notepadapp.presentation.note.LabelSelection
 import com.sametozkan.notepadapp.presentation.note.NoteViewModel
 import com.sametozkan.notepadapp.util.Constants
+import com.sametozkan.notepadapp.util.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,6 +41,13 @@ class NoteDetailFragment : Fragment(), MenuProvider {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         labelSelection = context as LabelSelection
+        (context as AppCompatActivity).supportActionBar?.let {
+            it.apply {
+                setDisplayShowTitleEnabled(false)
+                setDisplayHomeAsUpEnabled(true)
+            }
+        }
+
     }
 
     override fun onCreateView(
@@ -61,9 +70,16 @@ class NoteDetailFragment : Fragment(), MenuProvider {
             binding.apply {
                 title.text = it.note.title
                 content.text = it.note.text
-                datetime.text = it.note.timestamp.toString()
+                datetime.text = Utils.convertTimestampToString(it.note.timestamp)
             }
-            labelRvAdapter.labelList = it.labels
+            if (it.labels.isEmpty()) {
+                binding.labelRecyclerView.visibility = View.GONE
+                binding.empty.emptyState.visibility = View.VISIBLE
+            } else {
+                labelRvAdapter.labelList = it.labels
+                binding.labelRecyclerView.visibility = View.VISIBLE
+                binding.empty.emptyState.visibility = View.GONE
+            }
         }
     }
 
@@ -86,6 +102,7 @@ class NoteDetailFragment : Fragment(), MenuProvider {
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
+            android.R.id.home -> activity?.let { it.finish() }
             R.id.delete -> DeleteDialogFragment()
                 .show(requireActivity().supportFragmentManager, "Delete Dialog")
 
@@ -115,7 +132,12 @@ class NoteDetailFragment : Fragment(), MenuProvider {
     }
 
     private fun setLabelRv() {
-        labelRvAdapter = LabelListAdapter(ArrayList())
+        viewModel.noteWithLabels.value?.let {
+            labelRvAdapter = LabelListAdapter(it.labels)
+        }
+            ?: run {
+                labelRvAdapter = LabelListAdapter(ArrayList())
+            }
         binding.labelRecyclerView.apply {
             adapter = labelRvAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

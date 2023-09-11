@@ -2,25 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.1"
-        android:id="@+id/title"
-        style="@style/Title"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp"
         android:hint="Title"
-        android:gravity="center|left"/>
+        android:id="@+id/titleField">
 
-    <EditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/title"
+            android:scrollbars="horizontal"
+            android:maxLines="1"
+            android:gravity="center|left"
+            android:inputType="text"
+            style="@style/TitleInput"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.9"
-        android:id="@+id/content"
-        android:gravity="left|top"
-        style="@style/Text"
-        android:hint="Content"/>
+        android:hint="Content"
+        android:layout_margin="10dp"
+        android:id="@+id/contentField">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/content"
+            style="@style/TextInput"
+            android:scrollbars="vertical"
+            android:gravity="left|top"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.sametozkan.notepadapp.R
 import com.sametozkan.notepadapp.data.datasource.local.entities.NoteEntity
 import com.sametozkan.notepadapp.data.datasource.local.entities.NoteWithLabels
 import com.sametozkan.notepadapp.databinding.ItemNoteBinding
@@ -58,6 +59,10 @@ class SearchNoteListAdapter : RecyclerView.Adapter<SearchNoteListAdapter.ViewHol
                     it.context.startActivity(intent)
                 }
                 divider.setImageResource(noteEntity.color)
+                if (noteEntity.isFavorite)
+                    favorite.setImageResource(R.drawable.baseline_favorite_24)
+                else
+                    favorite.setImageResource(R.drawable.baseline_favorite_border_24)
             }
         }
     }

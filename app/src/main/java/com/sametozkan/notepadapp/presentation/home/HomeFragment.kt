@@ -59,18 +59,25 @@ class HomeFragment @Inject constructor() : Fragment() {
 
     private fun observeNotesWithLabels() {
         viewModel.fetchNotesWithLabels().observe(viewLifecycleOwner) {
-            it?.let {
-                viewModel.notesWithLabels = it
-                adapter.noteList = it
+            if (it.isEmpty()) {
+                binding.homeRecyclerView.visibility = View.GONE
+                binding.empty.emptyState.visibility = View.VISIBLE
+            } else {
+                it?.let {
+                    viewModel.notesWithLabels = it
+                    adapter.noteList = it
+                }
+                binding.homeRecyclerView.visibility = View.VISIBLE
+                binding.empty.emptyState.visibility = View.GONE
             }
+
         }
     }
 
     private fun observeFilter() {
         viewModel.getSelectedLabels().observe(viewLifecycleOwner) { selectedLabels ->
-            if (!viewModel.selectedIdList.value!!.isEmpty()) {
+            if (viewModel.selectedIdList.value!!.isNotEmpty()) {
                 binding.labelRv.apply {
-                    visibility = VISIBLE
                     adapter = LabelListAdapter(selectedLabels)
                     layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -81,8 +88,9 @@ class HomeFragment @Inject constructor() : Fragment() {
                     }
                 }
                 adapter.noteList = filteredNoteList
+                binding.filterField.visibility = View.VISIBLE
             } else {
-                binding.labelRv.visibility = View.GONE
+                binding.filterField.visibility = View.GONE
                 adapter.noteList = viewModel.notesWithLabels
             }
         }

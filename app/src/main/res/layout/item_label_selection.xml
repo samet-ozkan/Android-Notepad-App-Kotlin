@@ -2,13 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/background_rounded_corners"
+    android:elevation="2dp"
     android:padding="10dp"
+    android:layout_margin="10dp"
     android:orientation="vertical">
 
-    <com.google.android.material.checkbox.MaterialCheckBox
+    <CheckBox
         android:id="@+id/label"
         style="@style/Text"
-        android:background="@drawable/background_white_rounded"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Label" />

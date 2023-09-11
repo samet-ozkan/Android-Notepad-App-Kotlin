@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/background_white_rounded"
+    android:elevation="2dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="5dp">
 
-    <LinearLayout
-        android:layout_width="100dp"
+    <ImageView
+        android:id="@+id/tag"
+        android:layout_width="15dp"
+        android:layout_gravity="center"
+        android:layout_height="15dp"
+        android:src="@drawable/baseline_tag_24" />
+
+    <TextView
+        android:id="@+id/label"
+        style="@style/Text"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginHorizontal="2dp"
+        android:text="Label"
+        android:textStyle="bold|italic" />
 
-        <ImageView
-            android:layout_marginHorizontal="2dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_tag_24"
-            android:id="@+id/tag"/>
-
-        <TextView
-            android:layout_marginHorizontal="2dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:text="Label"
-            style="@style/Text"
-            android:id="@+id/label"/>
-
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+</LinearLayout>

@@ -25,12 +25,15 @@ interface LabelSelection {
 }
 
 @AndroidEntryPoint
-class NoteActivity : AppCompatActivity(), LabelSelection, ColorSelectionListener, DeleteDialogListener {
+class NoteActivity : AppCompatActivity(), LabelSelection, ColorSelectionListener,
+    DeleteDialogListener {
 
     private val TAG = "NoteActivity"
     private lateinit var binding: ActivityNoteBinding
     val viewModel: NoteViewModel by viewModels()
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    private val detailFragment = NoteDetailFragment()
+    private val editFragment = NoteEditFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,20 +41,17 @@ class NoteActivity : AppCompatActivity(), LabelSelection, ColorSelectionListener
         setContentView(binding.root)
         setToolbar()
         getExtras()
-        setFragment(NoteDetailFragment())
         setObserver()
         setResultLauncher()
-        observeMessage()
-    }
-
-    private fun observeMessage() {
-        viewModel.message.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
-        }
+        changeFragment(detailFragment)
     }
 
     private fun setToolbar() {
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowTitleEnabled(false)
+        }
     }
 
     private fun setResultLauncher() {
@@ -87,7 +87,7 @@ class NoteActivity : AppCompatActivity(), LabelSelection, ColorSelectionListener
         }
     }
 
-    private fun setFragment(fragment: Fragment) {
+    private fun changeFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(binding.frameLayout.id, fragment)
             commit()
@@ -97,8 +97,8 @@ class NoteActivity : AppCompatActivity(), LabelSelection, ColorSelectionListener
     private fun setObserver() {
         viewModel.changeFragment.observe(this@NoteActivity) {
             when (it) {
-                Constants.NOTE_DETAIL -> setFragment(NoteDetailFragment())
-                Constants.NOTE_EDIT -> setFragment(NoteEditFragment())
+                Constants.NOTE_DETAIL -> changeFragment(detailFragment)
+                Constants.NOTE_EDIT -> changeFragment(editFragment)
             }
         }
     }
@@ -108,6 +108,9 @@ class NoteActivity : AppCompatActivity(), LabelSelection, ColorSelectionListener
             val idList = it.labels.map { it.uid }
             val intent = Intent(this, LabelSelectionActivity::class.java)
             intent.putExtra(Constants.LABEL_ID_LIST, idList.toLongArray())
+            viewModel.noteWithLabels.value?.let {
+                intent.putExtra(Constants.COLOR, it.note.color)
+            }
             resultLauncher.launch(intent)
         }
     }
