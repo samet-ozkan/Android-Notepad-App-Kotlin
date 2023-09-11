@@ -39,7 +39,7 @@ class NoteViewModel @Inject constructor(
         noteWithLabels.value?.let { noteWithLabels ->
             viewModelScope.launch(Dispatchers.IO) {
                 updateNotesUseCase(noteWithLabels.note)
-                message.postValue("Note updated successfully!")
+                //message.postValue("Note updated successfully!")
             }
         }
     }

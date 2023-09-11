@@ -51,6 +51,7 @@ class AddNoteActivity : AppCompatActivity(), MenuProvider, ColorSelectionListene
         supportActionBar?.let { actionBar ->
             actionBar.apply {
                 setDisplayHomeAsUpEnabled(true)
+                setTitle("New Note")
             }
         }
     }

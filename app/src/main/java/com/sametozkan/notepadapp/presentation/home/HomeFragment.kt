@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.INVISIBLE
-import androidx.recyclerview.widget.RecyclerView.VISIBLE
+import com.sametozkan.notepadapp.data.datasource.local.entities.LabelEntity
+import com.sametozkan.notepadapp.data.datasource.local.entities.NoteWithLabels
 import com.sametozkan.notepadapp.databinding.FragmentHomeBinding
 import com.sametozkan.notepadapp.presentation.filter.FilterDialogFragment
 import com.sametozkan.notepadapp.presentation.note.add.AddNoteActivity
@@ -63,9 +63,15 @@ class HomeFragment @Inject constructor() : Fragment() {
                 binding.homeRecyclerView.visibility = View.GONE
                 binding.empty.emptyState.visibility = View.VISIBLE
             } else {
-                it?.let {
+                it?.let { it ->
                     viewModel.notesWithLabels = it
                     adapter.noteList = it
+                    viewModel.selectedIdList.value?.let { selectedIdList ->
+                        if (selectedIdList.isNotEmpty()) {
+                            adapter.noteList =
+                                viewModel.filterByLabelIds(selectedIdList, adapter.noteList)
+                        }
+                    }
                 }
                 binding.homeRecyclerView.visibility = View.VISIBLE
                 binding.empty.emptyState.visibility = View.GONE
@@ -82,12 +88,7 @@ class HomeFragment @Inject constructor() : Fragment() {
                     layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 }
-                val filteredNoteList = adapter.noteList.filter { noteWithLabels ->
-                    selectedLabels.any { labelEntity ->
-                        noteWithLabels.labels.contains(labelEntity)
-                    }
-                }
-                adapter.noteList = filteredNoteList
+                adapter.noteList = viewModel.filterByLabelEntities(selectedLabels, adapter.noteList)
                 binding.filterField.visibility = View.VISIBLE
             } else {
                 binding.filterField.visibility = View.GONE

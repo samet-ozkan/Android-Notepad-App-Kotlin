@@ -1,45 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="10dp"
+    android:id="@+id/createLabelField"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/background_rounded_top_corners"
     android:elevation="4dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <TextView
+        android:id="@+id/createLabelText"
+        style="@style/Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="Create Label"
-        android:id="@+id/createLabelText"
-        style="@style/Title"/>
+        android:text="Create Label" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
         android:layout_height="wrap_content"
-        app:startIconDrawable="@drawable/baseline_new_label_24"
-        android:hint="Label">
+        android:layout_margin="10dp"
+        android:hint="Label"
+        app:startIconDrawable="@drawable/baseline_new_label_24">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/labelTextInput"
             style="@style/TextInput"
-            android:id="@+id/labelTextInput"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="match_parent"
-        android:layout_marginHorizontal="10dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/createLabelButton"
         style="@style/BlackButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Create"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="10dp"
-        android:id="@+id/createLabelButton"/>
+        android:text="Create" />
 
 </LinearLayout>
+

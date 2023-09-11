@@ -43,14 +43,13 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/labelsRecyclerView"
-                style="@style/RecyclerViewScrollbarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginHorizontal="10dp"
+                android:layout_margin="10dp"
                 android:scrollbars="vertical"
                 tools:listitem="@layout/item_label_filter" />
 

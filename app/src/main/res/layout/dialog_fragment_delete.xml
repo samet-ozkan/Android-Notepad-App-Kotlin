@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_rounded_top_corners"
+    android:background="@drawable/background_rounded_bottom_corners"
     android:elevation="4dp"
     android:padding="10dp"
     android:orientation="vertical">
@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:gravity="center"
+        android:padding="10dp"
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton

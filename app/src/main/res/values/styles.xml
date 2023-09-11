@@ -78,4 +78,11 @@
         <item name="android:layout_gravity">center</item>
     </style>
 
+    <style name="DialogStyle" parent="Theme.Material3.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
+
 </resources>
