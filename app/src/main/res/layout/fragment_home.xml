@@ -53,6 +53,7 @@
         android:id="@+id/filterField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_marginHorizontal="10dp"
         android:background="@drawable/background_rounded_bottom_corners"
         android:elevation="2dp"
@@ -64,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
             android:text="Filtered by"
             android:textStyle="bold" />
 
@@ -77,6 +78,15 @@
             android:scrollbars="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_label" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            android:layout_marginBottom="10dp"
+            style="@style/BlackButton"
+            android:elevation="2dp"
+            android:id="@+id/clear"/>
 
     </LinearLayout>
 

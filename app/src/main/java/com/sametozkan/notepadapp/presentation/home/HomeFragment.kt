@@ -40,6 +40,13 @@ class HomeFragment @Inject constructor() : Fragment() {
         observeNotesWithLabels()
         setCustomToolbar()
         observeFilter()
+        setClearButton()
+    }
+
+    private fun setClearButton() {
+        binding.clear.setOnClickListener {
+            viewModel.selectedIdList.value = ArrayList()
+        }
     }
 
     private fun setCustomToolbar() {
@@ -69,7 +76,7 @@ class HomeFragment @Inject constructor() : Fragment() {
                     viewModel.selectedIdList.value?.let { selectedIdList ->
                         if (selectedIdList.isNotEmpty()) {
                             adapter.noteList =
-                                viewModel.filterByLabelIds(selectedIdList, adapter.noteList)
+                                viewModel.filterByLabelIds(selectedIdList, it)
                         }
                     }
                 }
@@ -88,7 +95,8 @@ class HomeFragment @Inject constructor() : Fragment() {
                     layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 }
-                adapter.noteList = viewModel.filterByLabelEntities(selectedLabels, adapter.noteList)
+                adapter.noteList =
+                    viewModel.filterByLabelEntities(selectedLabels, viewModel.notesWithLabels)
                 binding.filterField.visibility = View.VISIBLE
             } else {
                 binding.filterField.visibility = View.GONE
